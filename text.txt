@@ -1,0 +1,130 @@
+<div class="background-image">
+  <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <a class="nav-link active" data-toggle="tab" href="#loginTab">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#signupTab">Sign Up</a>
+            </li>
+          </ul>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" routerLink="/home">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="tab-content">
+          <div class="tab-pane fade show active" id="loginTab">
+            <div class="modal-body">
+              <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+                <div class="form-group">
+                  <label for="userName">Email</label>
+                  <input type="text" ngModel name="userName" class="form-control" id="userName" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                  <label for="userPassword">Password</label>
+                  <input type="password" ngModel name="userPassword" class="form-control" id="userPassword" placeholder="Enter your password" required>
+                </div>
+                <span class="ml-auto"> <a href="#">Forgot password?</a></span>
+                <div class="modal-footer">
+                  <input type="submit" class="btn btn-primary btn-block" value="Login">
+                </div>
+              </form>
+              
+            </div>
+          </div>
+          <div class="tab-pane fade" id="signupTab">
+            <div class="modal-body">
+              <form>
+                <div class="form-group">
+                  <label for="fullName">First Name</label>
+                  <input type="text" class="form-control" id="fullName" placeholder="Enter first name" required>
+                </div>
+                <div class="form-group">
+                  <label for="fullName">Last Name</label>
+                  <input type="text" class="form-control" id="fullName" placeholder="Enter last name" required>
+                </div>
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="email" class="form-control" id="email" placeholder="Enter email" required>
+                </div>
+                <div class="form-group">
+                  <label for="password">Password</label>
+                  <input type="password" class="form-control" id="password" placeholder="Enter password" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+
+@Component({
+  selector: 'app-authentication',
+  templateUrl: './authentication.component.html',
+  styleUrls: ['./authentication.component.css']
+})
+export class AuthenticationComponent implements OnInit {
+
+  constructor(
+
+    ) {
+  }
+
+  ngOnInit(): void {
+    
+  }
+
+
+  login(loginForm: NgForm) {
+    
+    console.log(loginForm.value);
+
+  }
+
+
+}
+
+
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class UserService {
+
+  constructor(
+    private httpClient: HttpClient
+    ) { }
+
+  PATH_OF_API = "http://localhost:9090";
+
+  requestHeader = new HttpHeaders({
+    "No-Auth": "True"
+  });
+
+  public login(loginData: any) {
+    return this.httpClient.post(
+      this.PATH_OF_API + "/authenticate", 
+      loginData, 
+      {
+        headers: this.requestHeader
+      }
+      );
+  }
+
+
+}

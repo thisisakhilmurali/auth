@@ -5,13 +5,14 @@ import { AdminComponent } from './admin/admin.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { UserComponent } from './user/user.component';
 import { LoginComponent } from './login/login.component';
+import { AuthGuard } from './__auth/auth.guard';
 
 const routes: Routes = [
 
   { path: 'home', component: HomeComponent },
-  { path: 'admin', component: AdminComponent },
+  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard], data:{roles: ['Admin']} },
   { path: 'forbidden', component: ForbiddenComponent },
-  { path: 'user', component: UserComponent },
+  { path: 'user', component: UserComponent , canActivate: [AuthGuard], data:{roles: ['User']}},
   { path: 'login', component: LoginComponent }
 
 ];

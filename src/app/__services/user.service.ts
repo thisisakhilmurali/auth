@@ -27,6 +27,16 @@ export class UserService {
       );
   }
 
+
+  public forUser() {
+    return this.httpClient.get(this.PATH_OF_API + '/forUser', {responseType: 'text'});
+  }
+
+  public forAdmin() {
+    return this.httpClient.get(this.PATH_OF_API + '/forAdmin', {responseType: 'text'});
+  }
+
+
   // role match check
   public roleMatch(allowedRoles: any): boolean {
     let isMatch = false;
